@@ -1,0 +1,26 @@
+
+body > header {
+
+    h1 {
+        font-size: 20px;
+    }
+
+    ul {
+        display: flex;
+        justify-content: flex-end;
+        flex-direction: row;
+
+        li {
+            display: inline;
+            list-style: none;
+            font-size: 12px;
+            a {
+                padding: 10px;
+
+                &:hover {
+                    color: #444;
+                }
+            }
+        }
+    }
+}

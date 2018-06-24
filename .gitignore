@@ -1,0 +1,6 @@
+*.hi
+*.o
+.stack-work
+dist
+_cache
+_site
