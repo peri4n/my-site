@@ -4,10 +4,14 @@ body > main > section.postlist {
         margin-left: 50px;
         li {
             padding-bottom: 10px;
-            display: flex;
+            display: inline-block;
             list-style: none;
             line-height: 1.5em;
             font-size: 18px;
+        }
+        li:before {
+            @extend .fas;
+            @extend .fa-angle-right;
         }
     }
 }
