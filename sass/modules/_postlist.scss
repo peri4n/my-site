@@ -1,12 +1,13 @@
 body > main > section.postlist {
+    padding-top: 40px;
     ul {
         margin-left: 50px;
         li {
-            color: red;
+            padding-bottom: 10px;
             display: flex;
             list-style: none;
             line-height: 1.5em;
-            font-size: 14px;
+            font-size: 18px;
         }
     }
 }

@@ -1,26 +1,32 @@
+body header {
+    border-bottom: 2px solid #eee;
+    padding-top: 20px;
+    nav {
+        ul {
+            list-style-type: none;
+            background-color: #dddddd;
 
-body > header {
+            li {
+                display: inline;
+                float: right;
+                list-style: none;
+                color: #000;
 
-    h1 {
-        font-size: 20px;
-    }
+                a {
+                    display: block;
+                    padding: 8px;
+                    font-size: 30px;
 
-    ul {
-        display: flex;
-        justify-content: flex-end;
-        flex-direction: row;
-
-        li {
-            display: inline;
-            list-style: none;
-            font-size: 12px;
-            a {
-                padding: 10px;
-
-                &:hover {
-                    color: #444;
+                    &:hover {
+                        color: #666;
+                    }
                 }
             }
+
+            li:first-child {
+                float: left;
+            }
+
         }
     }
 }

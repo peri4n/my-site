@@ -2,20 +2,24 @@
 {-# LANGUAGE OverloadedStrings #-}
 import           Data.Monoid (mappend)
 import           Hakyll
-import Hakyll.Web.Sass (sassCompiler)
-
 
 --------------------------------------------------------------------------------
 main :: IO ()
 main = hakyll $ do
+
     match "images/*" $ do
         route   idRoute
         compile copyFileCompiler
 
-    match "sass/*.scss" $ do
-        route $ setExtension "css"
-        let compressCssItem = fmap compressCss
-        compile (compressCssItem <$> sassCompiler)
+    match "sass/**.scss" $ do
+      compile getResourceBody
+
+    scssDependencies <- makePatternDependency "sass/**.scss"
+    rulesExtraDependencies [scssDependencies] $ do
+      create ["css/main.css"] $ do
+        route $ idRoute
+        compile $ sassCompiler
+
 
     match (fromList ["about.rst", "contact.markdown"]) $ do
         route   $ setExtension "html"
@@ -67,3 +71,9 @@ postCtx :: Context String
 postCtx =
     dateField "date" "%B %e, %Y" `mappend`
     defaultContext
+
+sassCompiler :: Compiler (Item String)
+sassCompiler = loadBody (fromFilePath "sass/main.scss")
+                 >>= makeItem
+                 >>= withItemBody (unixFilter "sass" args)
+  where args = ["-s", "--scss", "-I", "sass"]

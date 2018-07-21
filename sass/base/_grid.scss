@@ -1,12 +1,12 @@
 
 body {
-    // 80% of screen horizontally centered
-    width: 80%;
+    // 60% of screen horizontally centered
+    width: 60%;
     margin: auto;
 
     display: grid;
     // 100px header and footer
-    grid-template-rows: 100px auto 100px;
+    grid-template-rows: 80px auto 100px;
     grid-template-columns: auto 200px;
     grid-template-areas:
     "header header"
