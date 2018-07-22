@@ -1,9 +1,9 @@
-<section class="postlist">
+<section class="post-list">
     <ul>
         $for(posts)$
         <li>
-            $date$ - $title$
-            <a href="$url$">Read more</a>
+            <span class="post-title"><a href="$url$">$title$</a></span>
+            <span class="post-date">$date$</span>
         </li>
         $endfor$
     </ul>

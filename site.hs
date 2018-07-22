@@ -17,12 +17,12 @@ main = hakyll $ do
     scssDependencies <- makePatternDependency "sass/**.scss"
     rulesExtraDependencies [scssDependencies] $ do
       create ["css/main.css"] $ do
-        route $ idRoute
-        compile $ sassCompiler
+        route   idRoute
+        compile sassCompiler
 
 
-    match (fromList ["about.rst", "contact.markdown"]) $ do
-        route   $ setExtension "html"
+    match (fromList ["projects.html", "contact.html", "about.html"]) $ do
+        route     idRoute
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls
