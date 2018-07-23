@@ -24,7 +24,8 @@ main = hakyll $ do
     match (fromList ["projects.html", "contact.html", "about.html"]) $ do
         route     idRoute
         compile $ pandocCompiler
-            >>= loadAndApplyTemplate "templates/default.html" defaultContext
+            >>= loadAndApplyTemplate "templates/post.html"    postCtx
+            >>= loadAndApplyTemplate "templates/default.html" postCtx
             >>= relativizeUrls
 
     match "posts/*" $ do
