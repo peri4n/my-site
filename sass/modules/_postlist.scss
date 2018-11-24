@@ -16,17 +16,18 @@ body > main > section.post-list {
             }
 
             &:before {
+                margin-right: 10px;
                 width: 15px;
                 @extend .fas;
-                @extend .fa-angle-right;
-
+                @extend .fa-angle-left;
+                -webkit-transition: -webkit-transform .3s ease-in-out;
+                transition:         transform .3s ease-in-out;
             }
-
             &:hover {
-                color: #555;
+                color: orange;
                 &:before {
-                    @extend .fas;
-                    @extend .fa-angle-double-right;
+                    -webkit-transform: rotate(180deg);
+                    transform: rotate(180deg);
                 }
             }
         }
