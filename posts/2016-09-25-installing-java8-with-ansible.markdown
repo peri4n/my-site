@@ -14,12 +14,12 @@ boot an entire hadoop cluster on my MacBook Pro.
 To tell Vagrant that we want to use Ansible to provision the our virtual machines we have to adjust our `Vagrantfile`.
 The follwing snippet has to be placed inside the config blog we introduced last time:
 
-``` ruby
+~~~~ {.ruby .numberLines}
 config.vm.provision :ansible do |ansible|
    ansible.playbook = "provision/playbook.yml"
    ansible.sudo = true
 end
-```
+~~~~
 
 The first line inside the ansible block tells Vagrant the path to our playbook, which we will create soon. The second
 line tells Ansible to execute every command inside the playbook as root user.
@@ -34,23 +34,31 @@ already been done in a previous provisioning.
 But let's get back on track. Please copy the content, I'll explain everything afterwards.
 
 
-``` yaml
+~~~~ {.yaml .numberLines}
 ---
 - hosts: all
   tasks:
 
   - name: Install java 8 preresequesits
-    apt: name=python-software-properties
+    apt:
+      name: python-software-properties
 
   - name: Add Java 8 repository
-    apt_repository: repo='ppa:webupd8team/java'
+    apt_repository:
+      repo: 'ppa:webupd8team/java'
 
   - name: Agree to oracle license
-    debconf: name=oracle-java8-installer question=shared/accepted-oracle-license-v1-1 vtype=select value=true
+    debconf: 
+      name: oracle-java8-installer
+      question: shared/accepted-oracle-license-v1-1
+      vtype: select
+      value: true
 
   - name: Install Java 8
-    apt: name=oracle-java8-installer force=yes
-```
+    apt:
+      name: oracle-java8-installer
+      force: yes
+~~~~
 
 The first line is Ansible specific and tells it on which hosts the playbook should be run. When using Vagrant, this line should be 
 ignore because Vagrant decides on which hosts the playbook is applied.

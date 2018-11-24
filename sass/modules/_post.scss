@@ -1,19 +1,21 @@
 body main article {
     header {
         title {
-            font-size: 50px;
+            font-size: 2em;
             text-align: center;
-            font-style: italic;
             padding-bottom: 15px;
             display: block;
         }
-
-        .subtitle {
-            text-align: center;
-            color: #AAA;
-            font-style: italic;
-            font-size: 30px;
-        }
         padding-bottom: 30px;
+    }
+    section {
+        font-size: 1.2em;
+        width: 70%;
+        margin: auto;
+        line-height: 1.7em;
+
+        .sourceCode {
+            line-height: 1.5em;
+        }
     }
 }

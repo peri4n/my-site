@@ -15,9 +15,9 @@ The tools we are going to use are [Vagrant][vagrant] (to manage the boxes) and [
 
 If you are on a mac installing both is as easy as:
 
-``` zsh
+~~~~ {.zsh .numberLines}
 brew install vagrant virtualbox
-```
+~~~~
 
 Other operating system should be comparably easy.
 
@@ -26,7 +26,7 @@ Other operating system should be comparably easy.
 I'd like to use Ubuntu 16.04 (LTS) for my boxes. Searching the vagrantcloud I found: [bento/ubuntu-16.04][bento]. 
 To use it create a file called `Vagrantfile` with the following content:
 
-``` ruby
+~~~~ {.zsh .numberLines}
 Vagrant.configure("2") do |config|
   config.vm.define :server1 do |server1|
       server1.vm.box = "bento/ubuntu-16.04"
@@ -38,25 +38,25 @@ Vagrant.configure("2") do |config|
       server2.vm.network :private_network, ip: "10.11.1.101"
   end
 end
-```
+~~~~
 
 # Spinning up the boxes
 
 Starting both machines is as easy as:
 
-``` zsh
+~~~~ {.zsh .numberLines}
 vagrant up
-```
+~~~~
 
 Both servers are now up and running. You can ssh into server1 with:
 
-``` zsh
+~~~~ {.zsh .numberLines}
 vagrant ssh server1
-```
+~~~~
 
 To see if server2 to is also up and running, we can ping it:
 
-``` zsh
+~~~~ {.zsh .numberLines}
 vagrant ssh server1
 vagrant@vagrant:~$ ping 10.11.1.101
 PING 10.11.1.101 (10.11.1.101) 56(84) bytes of data.
@@ -65,7 +65,7 @@ PING 10.11.1.101 (10.11.1.101) 56(84) bytes of data.
 64 bytes from 10.11.1.101: icmp_seq=3 ttl=64 time=0.537 ms
 64 bytes from 10.11.1.101: icmp_seq=4 ttl=64 time=0.535 ms
 ...
-```
+~~~~
 
 [hadoop]:      http://hadoop.apache.org/
 [vagrant]:     http://vagrantup.com/

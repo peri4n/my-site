@@ -1,10 +1,16 @@
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro|Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro|Roboto:300,400|Roboto+Condensed:300');
 
 body {
-    font-family: 'OpenSans', sans-serif;
+    font-family: 'Roboto Condensed', sans-serif;
 
     header {
-        font-family: 'Source Sans Pro', sans-serif;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 300;
         font-size: 30px;
+    }
+
+    div.sourceCode {
+        font-family: 'Source Code Pro', sans-serif;
+        font-size: 15px;
     }
 }
