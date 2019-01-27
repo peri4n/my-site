@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "Running multiple VMs in vagrant"
-subtitle: "Spin them up!"
 categories: [hadoop, devops]
 ---
 

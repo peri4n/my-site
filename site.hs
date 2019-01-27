@@ -20,15 +20,7 @@ main = hakyll $ do
         route   idRoute
         compile sassCompiler
 
-
-    match (fromList ["projects.html", "contact.html", "about.html"]) $ do
-        route     idRoute
-        compile $ pandocCompiler
-            >>= loadAndApplyTemplate "templates/post.html"    postCtx
-            >>= loadAndApplyTemplate "templates/default.html" postCtx
-            >>= relativizeUrls
-
-    match "posts/*" $ do
+    match ("posts/*" .||. fromList ["projects.md", "contact.md", "about.md"]) $ do
         route $ setExtension "html"
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/post.html"    postCtx

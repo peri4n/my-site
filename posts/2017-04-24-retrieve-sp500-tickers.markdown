@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "Retrieve all tickers of the S&P 500 index"
-subtitle: "An introduction into python web scraping"
 author: Fabian Bull
 categories: [python, finance]
 ---
