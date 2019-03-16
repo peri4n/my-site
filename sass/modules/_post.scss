@@ -23,5 +23,13 @@ body main article {
             margin-top: 0.67em;
             margin-bottom: 0.47em;
         }
+
+        ul {
+          list-style-type: square;
+          margin-bottom: 20px;
+          li {
+            margin-left: 50px;
+          }
+        }
     }
 }
