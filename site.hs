@@ -5,7 +5,7 @@ import           Hakyll
 
 --------------------------------------------------------------------------------
 main :: IO ()
-main = hakyll $ do
+main = hakyllWith myConfig $ do
 
     match "fonts/*" $ do
         route   idRoute
@@ -56,3 +56,9 @@ sassCompiler = loadBody (fromFilePath "sass/main.scss")
                  >>= makeItem
                  >>= withItemBody (unixFilter "sass" args)
   where args = ["-s", "--scss", "-I", "sass"]
+
+--------------------------------------------------------------------------------
+myConfig :: Configuration
+myConfig = defaultConfiguration {
+    deployCommand = "aws s3 cp ./_site/ s3://bioinform.at/ --recursive"
+               }

@@ -20,7 +20,7 @@ The tricky part is, what gets echoed.
 Before executing the shell, on your computer, replaces `$(cat·~/hosts·)'`with the actual content of `~/hosts`.
 This feature of a shell is called [Command Substitution][3] and is available in both [Bash][4] and [Zsh][5].
 
-## Look ma no hands
+# Look ma no hands
 
 If you want to run this on all pods labeled `foo=bar`, you can use shell for loops:
 
