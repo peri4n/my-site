@@ -6,7 +6,7 @@ title: "Running a CLI command on each Kubernetes pod with a label"
 I once was tasked to setup a SaaS application in [Kubernetes][1] (short K8S).
 Everything went smoothly until I found out that some pod, spawned by the application, had to have their `/etc/hosts/` file adjusted.
 
-# So this is what I did:
+# So this is what I did
 
 I created a `hosts` file in my home directory containing the lines I wanted to add.
 Than I run:
