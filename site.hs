@@ -2,47 +2,52 @@
 {-# LANGUAGE OverloadedStrings #-}
 import           Data.Monoid (mappend)
 import           Hakyll
+import           System.Environment (getArgs)
 
 --------------------------------------------------------------------------------
 main :: IO ()
-main = hakyllWith myConfig $ do
+main = do
+    draftMode <- fmap (elem "--with-drafts") getArgs
+    let postsPattern = if (draftMode) then "posts/*" .||. "drafts/*" else "posts/*"
 
-    match "fonts/*" $ do
-        route   idRoute
-        compile copyFileCompiler
+    hakyllWith myConfig $ do
 
-    match "sass/**.scss" $ do
-      compile getResourceBody
+        match "fonts/*" $ do
+            route   idRoute
+            compile copyFileCompiler
 
-    scssDependencies <- makePatternDependency "sass/**.scss"
-    rulesExtraDependencies [scssDependencies] $ do
-      create ["css/main.css"] $ do
-        route   idRoute
-        compile sassCompiler
+        match "sass/**.scss" $ do
+          compile getResourceBody
 
-    match ("posts/*" .||. fromList ["projects.md", "contact.md", "about.md"]) $ do
-        route $ setExtension "html"
-        compile $ pandocCompiler
-            >>= loadAndApplyTemplate "templates/post.html"    postCtx
-            >>= loadAndApplyTemplate "templates/default.html" postCtx
-            >>= relativizeUrls
+        scssDependencies <- makePatternDependency "sass/**.scss"
+        rulesExtraDependencies [scssDependencies] $ do
+          create ["css/main.css"] $ do
+            route   idRoute
+            compile sassCompiler
 
-    match "index.html" $ do
-        route idRoute
-        compile $ do
-            posts <- recentFirst =<< loadAll "posts/*"
-            let indexCtx =
-                    listField "posts" postCtx (return posts) `mappend`
-                    constField "title" "Home"                `mappend`
-                    defaultContext
-
-            getResourceBody
-                >>= applyAsTemplate indexCtx
-                >>= saveSnapshot "content"
-                >>= loadAndApplyTemplate "templates/default.html" indexCtx
+        match (postsPattern .||. fromList ["projects.md", "contact.md", "about.md"]) $ do
+            route $ setExtension "html"
+            compile $ pandocCompiler
+                >>= loadAndApplyTemplate "templates/post.html"    postCtx
+                >>= loadAndApplyTemplate "templates/default.html" postCtx
                 >>= relativizeUrls
 
-    match "templates/*" $ compile templateBodyCompiler
+        match "index.html" $ do
+            route idRoute
+            compile $ do
+                posts <- recentFirst =<< loadAll "posts/*"
+                let indexCtx =
+                        listField "posts" postCtx (return posts) `mappend`
+                        constField "title" "Home"                `mappend`
+                        defaultContext
+
+                getResourceBody
+                    >>= applyAsTemplate indexCtx
+                    >>= saveSnapshot "content"
+                    >>= loadAndApplyTemplate "templates/default.html" indexCtx
+                    >>= relativizeUrls
+
+        match "templates/*" $ compile templateBodyCompiler
 
 
 --------------------------------------------------------------------------------
