@@ -1,6 +1,7 @@
 ---
 title: An apprentice of functional wizardry
 date: 23.08.2018
+author: Fabian Bull
 layout: post
 ---
 

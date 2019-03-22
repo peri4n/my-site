@@ -2,7 +2,7 @@
 
 import           Data.FileStore               (Revision, authorName, revAuthor,
                                                revDateTime, revId)
-import           Data.Monoid
+import           Data.Monoid                  ((<>))
 import           Hakyll
 import           Hakyll.FileStore.Git.Context (gitGetAuthorNames,
                                                gitGetRevisions)
@@ -30,11 +30,18 @@ main = do
             route   idRoute
             compile compressedSassCompiler
 
-        match (postsPattern .||. fromList ["projects.md", "contact.md", "about.md"]) $ do
+        match postsPattern $ do
             route $ setExtension "html"
             compile $ pandocCompiler
                 >>= loadAndApplyTemplate "templates/post.html"    postCtx
                 >>= loadAndApplyTemplate "templates/default.html" postCtx
+                >>= relativizeUrls
+
+        match (fromList ["projects.md", "contact.md", "about.md"]) $ do
+            route $ setExtension "html"
+            compile $ pandocCompiler
+                >>= loadAndApplyTemplate "templates/post.html"    pageCtx
+                >>= loadAndApplyTemplate "templates/default.html" pageCtx
                 >>= relativizeUrls
 
         match "index.html" $ do
@@ -67,7 +74,7 @@ postCtx :: Context String
 postCtx = myDefaultCtx <> gitCtx
 
 pageCtx :: Context String
-pageCtx = myDefaultCtx
+pageCtx = myDefaultCtx <> gitCtx
 
 metaKeywordCtx :: Context String
 metaKeywordCtx =
