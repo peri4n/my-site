@@ -13,50 +13,46 @@ import           System.Process               (readProcess)
 
 main :: IO ()
 main = do
-  draftMode <- fmap (elem "--with-drafts") getArgs
-  let postsPattern =
-        if draftMode
-          then "posts/*" .||. "drafts/*"
-          else "posts/*"
+    draftMode <- fmap (elem "--with-drafts") getArgs
+    let postsPattern = if draftMode then "posts/*" .||. "drafts/*" else "posts/*"
 
-  hakyllWith myConfig $ do
-    match "fonts/*" $ do
-      route idRoute
-      compile copyFileCompiler
+    hakyllWith myConfig $ do
+        match "fonts/*" $ do
+            route   idRoute
+            compile copyFileCompiler
 
-    match "sass/**.scss" $ compile getResourceBody
-    scssDependencies <- makePatternDependency "sass/**.scss"
-    rulesExtraDependencies [scssDependencies] $
-      create ["css/main.css"] $ do
-        route idRoute
-        compile compressedSassCompiler
+        match "sass/**.scss" $
+          compile getResourceBody
 
-    match postsPattern $ do
-      route $ setExtension "html"
-      compile $
-        pandocCompiler >>= loadAndApplyTemplate "templates/post.html" postCtx >>=
-        loadAndApplyTemplate "templates/default.html" postCtx >>=
-        relativizeUrls
+        scssDependencies <- makePatternDependency "sass/**.scss"
+        rulesExtraDependencies [scssDependencies] $
+          create ["css/main.css"] $ do
+            route   idRoute
+            compile compressedSassCompiler
 
-    match (fromList ["projects.md", "contact.md", "about.md"]) $ do
-      route $ setExtension "html"
-      compile $
-        pandocCompiler >>= loadAndApplyTemplate "templates/default.html" pageCtx >>=
-        relativizeUrls
+        match (postsPattern .||. fromList ["projects.md", "contact.md", "about.md"]) $ do
+            route $ setExtension "html"
+            compile $ pandocCompiler
+                >>= loadAndApplyTemplate "templates/post.html"    postCtx
+                >>= loadAndApplyTemplate "templates/default.html" postCtx
+                >>= relativizeUrls
 
-    match "index.html" $ do
-      route idRoute
-      compile $ do
-        posts <- recentFirst =<< loadAll "posts/*"
-        let indexCtx =
-              listField "posts" postCtx (return posts) `mappend`
-              constField "title" "Home" `mappend`
-              pageCtx
-        getResourceBody >>= applyAsTemplate indexCtx >>=
-          loadAndApplyTemplate "templates/default.html" indexCtx >>=
-          relativizeUrls
+        match "index.html" $ do
+            route idRoute
+            compile $ do
+                posts <- recentFirst =<< loadAll "posts/*"
+                let indexCtx =
+                        listField "posts" postCtx (return posts) `mappend`
+                        constField "title" "Home"                `mappend`
+                        defaultContext
 
-    match "templates/*" $ compile templateBodyCompiler
+                getResourceBody
+                    >>= applyAsTemplate indexCtx
+                    >>= saveSnapshot "content"
+                    >>= loadAndApplyTemplate "templates/default.html" indexCtx
+                    >>= relativizeUrls
+
+        match "templates/*" $ compile templateBodyCompiler
 
 --------------------------------------------------------------------------------
 -- Contexts
