@@ -4,6 +4,7 @@ import           Data.Monoid ((<>))
 import           Hakyll
 import           Hakyll.Web.CompressCss (compressCss)
 import           System.Environment (getArgs)
+import           System.Process (readProcess)
 
 --------------------------------------------------------------------------------
 main :: IO ()
@@ -47,7 +48,7 @@ main = do
                 let indexCtx =
                         listField "posts" postCtx (return posts) `mappend`
                         constField "title" "Home"                `mappend`
-                        defaultContext
+                        pageCtx
 
                 getResourceBody
                     >>= applyAsTemplate indexCtx
@@ -63,11 +64,11 @@ main = do
 --------------------------------------------------------------------------------
 postCtx :: Context String
 postCtx =
-    dateField "date" "%B %e, %Y" <> metaKeywordCtx <> defaultContext
+    dateField "date" "%B %e, %Y" <> metaKeywordCtx <> gitCtx <> defaultContext
 
 pageCtx :: Context String
 pageCtx =
-    dateField "date" "%B %e, %Y" <> defaultContext
+    dateField "date" "%B %e, %Y" <> defaultContext <> gitCtx
 
 metaKeywordCtx :: Context String
 metaKeywordCtx = field "metaKeywords" $ \item -> do
@@ -75,6 +76,13 @@ metaKeywordCtx = field "metaKeywords" $ \item -> do
     return $ maybe "" showMetaTags tags
         where
             showMetaTags t = "<meta name=\"keywords\" content=\"" ++ t ++ "\">\n"
+
+gitCtx :: Context String
+gitCtx = field "gitTag" $ \item ->
+    unsafeCompiler $ do
+        let fileName = itemIdentifier item
+        sha <- readProcess "git" ["hash-object", toFilePath fileName] ""
+        return sha
 
 --------------------------------------------------------------------------------
 -- Compilers
