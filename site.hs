@@ -17,11 +17,14 @@ main = do
             route   idRoute
             compile copyFileCompiler
 
-        match "sass/main.scss" $ do
-            compile getResourceBody
-            scssDependencies <- makePatternDependency "sass/**.scss"
-            rulesExtraDependencies [scssDependencies] $
-                create ["css/main.css"] $ compile compressedSassCompiler
+        match "sass/**.scss" $ do
+          compile getResourceBody
+
+        scssDependencies <- makePatternDependency "sass/**.scss"
+        rulesExtraDependencies [scssDependencies] $ do
+          create ["css/main.css"] $ do
+            route   idRoute
+            compile compressedSassCompiler
 
         match (postsPattern .||. fromList ["projects.md", "contact.md", "about.md"]) $ do
             route $ setExtension "html"
