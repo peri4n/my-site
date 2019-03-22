@@ -1,6 +1,6 @@
 --------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
-import           Data.Monoid (mappend)
+import           Data.Monoid ((<>))
 import           Hakyll
 import           Hakyll.Web.CompressCss (compressCss)
 import           System.Environment (getArgs)
@@ -26,11 +26,18 @@ main = do
             route   idRoute
             compile compressedSassCompiler
 
-        match (postsPattern .||. fromList ["projects.md", "contact.md", "about.md"]) $ do
+        match postsPattern $ do
             route $ setExtension "html"
             compile $ pandocCompiler
                 >>= loadAndApplyTemplate "templates/post.html"    postCtx
                 >>= loadAndApplyTemplate "templates/default.html" postCtx
+                >>= relativizeUrls
+
+        match (fromList ["projects.md", "contact.md", "about.md"]) $ do
+            route $ setExtension "html"
+            compile $ pandocCompiler
+                >>= loadAndApplyTemplate "templates/post.html"    pageCtx
+                >>= loadAndApplyTemplate "templates/default.html" pageCtx
                 >>= relativizeUrls
 
         match "index.html" $ do
@@ -56,8 +63,18 @@ main = do
 --------------------------------------------------------------------------------
 postCtx :: Context String
 postCtx =
-    dateField "date" "%B %e, %Y" `mappend`
-    defaultContext
+    dateField "date" "%B %e, %Y" <> metaKeywordCtx <> defaultContext
+
+pageCtx :: Context String
+pageCtx =
+    dateField "date" "%B %e, %Y" <> defaultContext
+
+metaKeywordCtx :: Context String
+metaKeywordCtx = field "metaKeywords" $ \item -> do
+    tags <- getMetadataField (itemIdentifier item) "keywords"
+    return $ maybe "" showMetaTags tags
+        where
+            showMetaTags t = "<meta name=\"keywords\" content=\"" ++ t ++ "\">\n"
 
 --------------------------------------------------------------------------------
 -- Compilers
