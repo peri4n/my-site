@@ -2,13 +2,14 @@
 {-# LANGUAGE OverloadedStrings #-}
 import           Data.Monoid (mappend)
 import           Hakyll
+import           Hakyll.Web.CompressCss (compressCss)
 import           System.Environment (getArgs)
 
 --------------------------------------------------------------------------------
 main :: IO ()
 main = do
     draftMode <- fmap (elem "--with-drafts") getArgs
-    let postsPattern = if (draftMode) then "posts/*" .||. "drafts/*" else "posts/*"
+    let postsPattern = if draftMode then "posts/*" .||. "drafts/*" else "posts/*"
 
     hakyllWith myConfig $ do
 
@@ -16,14 +17,11 @@ main = do
             route   idRoute
             compile copyFileCompiler
 
-        match "sass/**.scss" $ do
-          compile getResourceBody
-
-        scssDependencies <- makePatternDependency "sass/**.scss"
-        rulesExtraDependencies [scssDependencies] $ do
-          create ["css/main.css"] $ do
-            route   idRoute
-            compile sassCompiler
+        match "sass/main.scss" $ do
+            compile getResourceBody
+            scssDependencies <- makePatternDependency "sass/**.scss"
+            rulesExtraDependencies [scssDependencies] $
+                create ["css/main.css"] $ compile compressedSassCompiler
 
         match (postsPattern .||. fromList ["projects.md", "contact.md", "about.md"]) $ do
             route $ setExtension "html"
@@ -51,17 +49,27 @@ main = do
 
 
 --------------------------------------------------------------------------------
+-- Contexts
+--------------------------------------------------------------------------------
 postCtx :: Context String
 postCtx =
     dateField "date" "%B %e, %Y" `mappend`
     defaultContext
 
+--------------------------------------------------------------------------------
+-- Compilers
+--------------------------------------------------------------------------------
 sassCompiler :: Compiler (Item String)
 sassCompiler = loadBody (fromFilePath "sass/main.scss")
                  >>= makeItem
                  >>= withItemBody (unixFilter "sass" args)
-  where args = ["-s", "--scss", "-I", "sass"]
+    where args = ["-s", "--scss", "-I", "sass"]
 
+compressedSassCompiler :: Compiler (Item String)
+compressedSassCompiler = fmap compressCss <$> sassCompiler
+
+--------------------------------------------------------------------------------
+-- Configuration
 --------------------------------------------------------------------------------
 myConfig :: Configuration
 myConfig = defaultConfiguration {
