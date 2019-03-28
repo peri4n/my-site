@@ -4,8 +4,9 @@
 }
 
 a {
+    color: $red;
     text-decoration: none;
     &:visited {
-        color: #000;
+        color: $red;
     }
 }

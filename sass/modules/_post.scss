@@ -3,9 +3,22 @@ body main article {
         title {
             font-size: 2em;
             text-align: center;
-            padding-bottom: 15px;
+            padding-bottom: 25px;
             display: block;
         }
+        .description {
+            display: block;
+            margin-left: 50%;
+            font-size: 0.6em;
+
+            .author {
+                color: grey;
+            }
+            .date {
+                color: grey;
+            }
+        }
+
         padding-bottom: 30px;
     }
     section {
@@ -31,5 +44,10 @@ body main article {
             margin-left: 50px;
           }
         }
+    }
+
+    footer {
+        width: 70%;
+        margin: 60px auto;
     }
 }
