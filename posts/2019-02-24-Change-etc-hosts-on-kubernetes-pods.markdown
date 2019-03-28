@@ -1,6 +1,7 @@
 ---
 layout: post
-title: "Running a CLI command on each Kubernetes pod with a label"
+title: Changing the /etc/hosts on every Kubernetes pod with a label
+keywords: kubernetes,kubectl,saas,zsh,bash, shell
 ---
 
 I once was tasked to setup a SaaS application in [Kubernetes][1] (short K8S).

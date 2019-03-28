@@ -42,7 +42,7 @@ pre.numberSource {
         }
         
         &:before { 
-            content: attr(data-line-number);
+            content: attr(title);
             position: absolute; left: -5em; text-align: right; vertical-align: baseline;
             border: none; pointer-events: all;
             -webkit-touch-callout: none; -webkit-user-select: none;
@@ -120,7 +120,7 @@ code span {
         font-style: italic;
     } 
     &.kw { /* Keyword */
-        color: #ac4142;
+        color: $code_keyword; 
         font-weight: bold;
     }
     &.op { /* Operator */

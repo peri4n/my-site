@@ -2,6 +2,11 @@ body > main div.post-list {
     ul {
         li {
             padding-left: 30px;
+
+            .post-title a {
+                color: $post_list_link;
+            }
+
             .post-title {
                 padding-bottom: 10px;
                 display: inline-block;
@@ -16,15 +21,18 @@ body > main div.post-list {
             }
 
             &:before {
-                padding-left: 10px;
                 width: 30px;
                 @extend .fas;
                 @extend .fa-angle-right;
             }
+
             &:hover {
-                color: orange;
+                &, .post-title a, .post-date {
+                    color: $post_list_link_hover;
+                }
+
                 &:before {
-                    padding-left: 20px;
+                    padding-left: 10px;
                     width: 20px;
                 }
             }

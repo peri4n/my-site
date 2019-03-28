@@ -1,4 +1,9 @@
-$color1: #286DA8;
-$color2: #CD5360;
-$color3: #B37B4E;
-$color4: #438496;
+$red: #CD5360;
+$black: #000000;
+
+// Post list colors
+$post_list_link: $black;
+$post_list_link_hover: $red;
+
+// Syntax highlighting colors
+$code_keyword: #AC4142;
