@@ -55,7 +55,6 @@ main = do
 
                 getResourceBody
                     >>= applyAsTemplate indexCtx
-                    >>= saveSnapshot "content"
                     >>= loadAndApplyTemplate "templates/default.html" indexCtx
                     >>= relativizeUrls
 
