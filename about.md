@@ -15,7 +15,7 @@ In particular:
 
 * [Scala](https://scala-lang.org)
 * [Haskell](https://www.haskell.org)
-* [Python](https://python.org)/[R](https://r-project.org) (There in no data science without it.)
+* [Python](https://python.org)/[R](https://r-project.org) (There is no data science without it.)
 
 # Technologies
 
@@ -23,7 +23,7 @@ In particular:
 * [Kubernetes](https://kubernetes.io)/[Docker](https://docker.com)
 * [Amazon Web Services](https://aws.amazon.com)
 
-I write about the problems I face in my day-to-day life and how I solved them.
+I write about the things that go through my head: the day-to-day problems I face in my job, as well as nerd topics I am interested in.
 I hope this proves to be useful for you and the rest of the internet.
 
 

@@ -1,20 +1,32 @@
 ---
 title: Stuff I do
-date: 23.08.2018
+date: 13.10.2019
 layout: post
 ---
 
-Nullam imperdiet sodales orci vitae molestie. Nunc quam orci, pharetra a
-rhoncus vitae, eleifend id felis. Suspendisse potenti. Etiam vitae urna orci.
-Quisque pellentesque dignissim felis, egestas tempus urna luctus vitae. In hac
-habitasse platea dictumst. Morbi fringilla mattis odio, et mattis tellus
-accumsan vitae.
+# Beagle
 
-1. Amamus Unicode 碁
-2. Interdum nex magna.
+This project aims to help life scientists in managing their data - like a personal Google for your scientific data.
+It is the place where I apply newly learned skills to a real-world project.
+You can find out more on [GitHub](https://github.com/peri4n/beagle)
 
-Vivamus eget mauris sit amet nulla laoreet lobortis. Nulla in diam elementum
-risus convallis commodo. Cras vehicula varius dui vitae facilisis. Proin
-elementum libero eget leo aliquet quis euismod orci vestibulum. Duis rhoncus
-lorem consequat tellus vestibulum aliquam. Quisque orci orci, malesuada porta
-blandit et, interdum nec magna.
+# My Dev Environment
+
+Notorious for being a productivity nerd, it comes naturally that I care a lot about my development setup.
+I have customized my:
+
+* Shell
+* Editor (NeoVim)
+* Window Manager
+* Email setup
+* [Keyboard](https://github.com/peri4n/qmk_firmware)
+
+Additionally applying all the customizations is automated using Ansible scripts.
+You can find out more on [GitHub](https://github.com/peri4n/setup)
+
+# This Blog
+
+In case you haven't already noticed, this site is generated my yet another static site generator.
+The one I use is called [Hakyll](https://jaspervdj.be/hakyll/) and is written in [Haskell](https://www.haskell.org).
+This not only allows me to learn a little bit about Haskell but also to fully customize the features of this blog.
+
