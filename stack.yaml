@@ -39,7 +39,7 @@ packages:
 # using the same syntax as the packages field.
 # (e.g., acme-missiles-0.3)
 extra-deps: 
-- hakyll-4.12.5.1
+- hakyll-4.13.0.1
 - hakyll-sass-0.2.4
 - hakyll-filestore-0.1.6
 - lrucache-1.2.0.1

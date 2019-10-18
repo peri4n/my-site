@@ -30,11 +30,26 @@ main = do
             route   idRoute
             compile compressedSassCompiler
 
+        tags <- buildTags postsPattern (fromCapture "tags/*.html")
+
+        tagsRules tags $ \tag pattern -> do
+            let title = "Posts tagged \"" ++ tag ++ "\""
+            route idRoute
+            compile $ do
+                posts <- recentFirst =<< loadAll pattern
+                let ctx = constField "title" title
+                          `mappend` listField "posts" (postCtxWithTags tags) (return posts)
+                          `mappend` defaultContext
+                makeItem ""
+                    >>= loadAndApplyTemplate "templates/tags.html" ctx
+                    >>= loadAndApplyTemplate "templates/default.html" ctx
+                    >>= relativizeUrls
+
         match postsPattern $ do
             route $ setExtension "html"
             compile $ pandocCompiler
-                >>= loadAndApplyTemplate "templates/post.html"    postCtx
-                >>= loadAndApplyTemplate "templates/default.html" postCtx
+                >>= loadAndApplyTemplate "templates/post.html"    (postCtxWithTags tags)
+                >>= loadAndApplyTemplate "templates/default.html" (postCtxWithTags tags)
                 >>= relativizeUrls
 
         match (fromList ["projects.md", "contact.md", "about.md"]) $ do
@@ -68,6 +83,9 @@ myDefaultCtx = defaultContext <> dateCtx <> metadataField
 
 dateCtx :: Context String
 dateCtx = dateField "date" "%B %e, %Y"
+
+postCtxWithTags :: Tags -> Context String
+postCtxWithTags tags = tagsField "tags" tags <> defaultContext <> gitCtx <> dateCtx
 
 postCtx :: Context String
 postCtx = myDefaultCtx <> gitCtx

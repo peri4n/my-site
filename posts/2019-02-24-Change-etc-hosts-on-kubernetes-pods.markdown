@@ -2,6 +2,7 @@
 layout: post
 title: Changing the /etc/hosts on every Kubernetes pod with a label
 keywords: kubernetes,kubectl,saas,zsh,bash, shell
+tags: kubernetes
 ---
 
 I once was tasked to setup a SaaS application in [Kubernetes][1] (short K8S).
