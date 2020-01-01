@@ -1,21 +1,25 @@
 body > header {
     border-bottom: 2px solid #eee;
     padding-top: 20px;
+
+    // make the header sticky
     position: sticky;
-    background: $font_color_bg;
     top: 0;
+
     nav {
+        width: 80%;
+        margin: auto;
         ul {
             list-style-type: none;
-            background-color: #dddddd;
+
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
 
             li {
-                display: inline;
-                float: right;
                 list-style: none;
 
                 a {
-                    display: block;
                     padding: 8px;
                     font-size: 30px;
 
@@ -24,11 +28,9 @@ body > header {
                     }
                 }
             }
-
             li:first-child {
-                float: left;
+                flex-grow: 1;
             }
-
         }
     }
 }

@@ -1,9 +1,5 @@
 
 body {
-    // 60% of screen horizontally centered
-    width: 60%;
-    margin: auto;
-
     display: grid;
     // 100px header and footer
     grid-template-rows: 80px auto 100px;
@@ -15,7 +11,7 @@ body {
 
     > main {
         grid-area: main;
-        min-height: 800px;
+        min-height: 700px;
         padding-top: 30px;
     }
 

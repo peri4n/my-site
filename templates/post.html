@@ -1,20 +1,30 @@
-<article>
-    <header>
-        <title>$title$</title>
-        <span class="description">
-            by <span class="author">$author$</span> on <span class="date">$date$</span>
-        </span>
-        <span class="tags">
-            Tags: 
-            $if(tags)$
-            $tags$ 
-            $endif$
-        </span>
-    </header>
-    <section>
-        $body$
-    </section>
-    <footer>
-        This article last edited on the $lastmod$. Last revision: <a href="https://github.com/peri4n/my-site/commit/$revision$">$revision$</a>
-    </footer>
-</article>
+<div style="display: flex;">
+    <!-- Sidebar -->
+    <aside style="
+        width: 20%;
+        text-align: right;
+        ">
+            <span class="tags">
+                $if(tags)$
+                $tags$ 
+                : Tags 
+                $endif$
+            </span>
+    </aside>
+    <article style="
+        width: 60%;
+    ">
+        <header>
+            <title>$title$</title>
+            <span class="description">
+                by <span class="author">$author$</span> on <span class="date">$date$</span>
+            </span>
+        </header>
+        <section>
+            $body$
+        </section>
+        <footer>
+            This article last edited on the $lastmod$. Last revision: <a href="https://github.com/peri4n/my-site/commit/$revision$">$revision$</a>
+        </footer>
+    </article>
+</div>
