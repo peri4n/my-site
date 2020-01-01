@@ -1,6 +1,9 @@
 body > header {
     border-bottom: 2px solid #eee;
     padding-top: 20px;
+    position: sticky;
+    background: $font_color_bg;
+    top: 0;
     nav {
         ul {
             list-style-type: none;
