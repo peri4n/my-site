@@ -5,8 +5,10 @@ body > header {
     // make the header sticky
     position: sticky;
     top: 0;
+    background-color: white;
+    z-index: 1;
 
-    nav {
+            nav {
         width: 80%;
         margin: auto;
         ul {

@@ -1,10 +1,12 @@
 <div class="post-list">
     <ul>
         $for(posts)$
-        <li>
-            <span class="post-title"><a href="$url$">$title$</a></span>
-            <span class="post-date">$date$</span>
-        </li>
+        <a href="$url$">
+            <li>
+                <span class="post-title">$title$</span>
+                <span class="post-date">$date$</span>
+            </li>
+        </a>
         $endfor$
     </ul>
 </div>

@@ -1,43 +1,46 @@
+@import "../base/colors";
+
 body > main div.post-list {
-    width: 80%;
-    margin: auto;
-    ul {
-        li {
-            padding-left: 30px;
+  width: 80%;
+  margin: 0 auto;
 
-            .post-title a {
-                color: $post_list_link;
-            }
+  ul {
+    a {
+      color: black;
 
-            .post-title {
-                padding-bottom: 10px;
-                display: inline-block;
-                list-style: none;
-                line-height: 1.5em;
-                font-size: 18px;
-            }
+      li {
+        padding-left: 20px;
+        padding-right: 20px;
+        margin-bottom: 10px;
 
-            .post-date {
-                font-style: italic;
-                float:right
-            }
-
-            &:before {
-                width: 30px;
-                @extend .fas;
-                @extend .fa-angle-right;
-            }
-
-            &:hover {
-                &, .post-title a, .post-date {
-                    color: $post_list_link_hover;
-                }
-
-                &:before {
-                    padding-left: 10px;
-                    width: 20px;
-                }
-            }
+        &:before {
+          width: 30px;
+          @extend .fas;
+          @extend .fa-angle-right;
         }
+
+        &:hover {
+          color: $post_list_link_hover;
+          background-color: rgba(0, 0, 0, 0.02);
+
+          &:before {
+            padding-left: 10px;
+            width: 20px;
+          }
+        }
+
+        .post-title {
+          display: inline-block;
+          line-height: 1.5em;
+          font-size: 18px;
+        }
+
+        .post-date {
+          line-height: 1.5em;
+          font-style: italic;
+          float: right;
+        }
+      }
     }
+  }
 }

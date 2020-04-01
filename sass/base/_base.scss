@@ -1,14 +1,13 @@
 @import "colors";
 
-* {
-    color:black;
-    background: $font_color_bg;
-}
-
 a {
     color: $red;
     text-decoration: none;
     &:visited {
         color: $red;
     }
+}
+
+li {
+    list-style: none;
 }
