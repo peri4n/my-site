@@ -15,6 +15,7 @@ body > main div.post-list {
 
         &:before {
           width: 30px;
+          transition: all 0.5s;
           @extend .fas;
           @extend .fa-angle-right;
         }
@@ -26,6 +27,7 @@ body > main div.post-list {
           &:before {
             padding-left: 10px;
             width: 20px;
+            transition: all 0.5s;
           }
         }
 

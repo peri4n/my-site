@@ -17,21 +17,22 @@ main = do
     let postsPattern = if draftMode then "posts/*" .||. "drafts/*" else "posts/*"
 
     hakyllWith myConfig $ do
+        -- Process fonts
         match "fonts/*" $ do
             route   idRoute
             compile copyFileCompiler
 
+        -- Process styles
         match "sass/**.scss" $
           compile getResourceBody
-
         scssDependencies <- makePatternDependency "sass/**.scss"
         rulesExtraDependencies [scssDependencies] $
           create ["css/main.css"] $ do
             route   idRoute
             compile compressedSassCompiler
 
+        -- Process tags
         tags <- buildTags postsPattern (fromCapture "tags/*.html")
-
         tagsRules tags $ \tag pattern -> do
             let title = "Posts tagged \"" ++ tag ++ "\""
             route idRoute
@@ -45,20 +46,15 @@ main = do
                     >>= loadAndApplyTemplate "templates/default.html" ctx
                     >>= relativizeUrls
 
-        match postsPattern $ do
+        -- Process articles
+        match (postsPattern .||. fromList ["projects.md", "contact.md", "about.md"]) $ do
             route $ setExtension "html"
             compile $ pandocCompiler
                 >>= loadAndApplyTemplate "templates/post.html"    (postCtxWithTags tags)
                 >>= loadAndApplyTemplate "templates/default.html" (postCtxWithTags tags)
                 >>= relativizeUrls
 
-        match (fromList ["projects.md", "contact.md", "about.md"]) $ do
-            route $ setExtension "html"
-            compile $ pandocCompiler
-                >>= loadAndApplyTemplate "templates/post.html"    pageCtx
-                >>= loadAndApplyTemplate "templates/default.html" pageCtx
-                >>= relativizeUrls
-
+        -- Process index page
         match "index.html" $ do
             route idRoute
             compile $ do
@@ -67,7 +63,6 @@ main = do
                         listField "posts" postCtx (return posts) `mappend`
                         constField "title" "Home"                `mappend`
                         defaultContext
-
                 getResourceBody
                     >>= applyAsTemplate indexCtx
                     >>= loadAndApplyTemplate "templates/default.html" indexCtx
