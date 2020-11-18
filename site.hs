@@ -33,6 +33,23 @@ main = do
 
         -- Process tags
         tags <- buildTags postsPattern (fromCapture "tags/*.html")
+
+        -- Process articles
+        match postsPattern $ do
+            route $ setExtension "html"
+            compile $ pandocCompiler
+                >>= loadAndApplyTemplate "templates/post.html"    (postCtxWithTags tags)
+                >>= loadAndApplyTemplate "templates/default.html" (postCtxWithTags tags)
+                >>= relativizeUrls
+
+        match (fromList ["projects.md", "contact.md", "about.md"]) $ do
+            route $ setExtension "html"
+            compile $ pandocCompiler
+                >>= loadAndApplyTemplate "templates/page.html"    pageCtx
+                >>= loadAndApplyTemplate "templates/default.html" pageCtx
+                >>= relativizeUrls
+
+        -- Process tags pages
         tagsRules tags $ \tag pattern -> do
             let title = "Posts tagged \"" ++ tag ++ "\""
             route idRoute
@@ -46,13 +63,6 @@ main = do
                     >>= loadAndApplyTemplate "templates/default.html" ctx
                     >>= relativizeUrls
 
-        -- Process articles
-        match (postsPattern .||. fromList ["projects.md", "contact.md", "about.md"]) $ do
-            route $ setExtension "html"
-            compile $ pandocCompiler
-                >>= loadAndApplyTemplate "templates/post.html"    (postCtxWithTags tags)
-                >>= loadAndApplyTemplate "templates/default.html" (postCtxWithTags tags)
-                >>= relativizeUrls
 
         -- Process index page
         match "index.html" $ do
