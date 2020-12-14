@@ -1,0 +1,30 @@
+---
+layout: post
+title: Getting Started with AWS CloudFormation
+keywords: aws,cloud,cloudformation
+tags: aws,cloudformation
+---
+
+Hello world
+
+~~~~ {.yaml .numberLines}
+AWSTemplateFormatVersion: 2010-09-09
+Metadata:
+  'AWS::CloudFormation::Designer':
+    bcdf22a7-1aaf-4dd4-8cd4-e554ebda9c21:
+      size:
+        width: 1380
+        height: 410
+      position:
+        x: 460
+        'y': 156
+      z: 0
+      embeds: []
+Resources:
+  EC2VPCIC75:
+    Type: 'AWS::EC2::VPC'
+    Properties:
+      CidrBlock: 10.0.0.0/24
+      Tags:
+        - Key: foo
+~~~~
