@@ -5,13 +5,6 @@
 
 packages:
 - completed:
-    hackage: hakyll-4.13.0.1@sha256:0f27d74feaedc96648ec5377ecec2b35dd677516c9667d179462a350f2075628,8817
-    pantry-tree:
-      size: 7841
-      sha256: 4a4409d287ee3daabb0141e3ebd3d2e88ead7382ba5cc582733907b4a938c4a8
-  original:
-    hackage: hakyll-4.13.0.1
-- completed:
     hackage: hakyll-sass-0.2.4@sha256:4d2fbd8b63f5ef15483fc6dda09e10eefd63b4f873ad38dec2a3607eb504a8ba,939
     pantry-tree:
       size: 217
@@ -19,29 +12,36 @@ packages:
   original:
     hackage: hakyll-sass-0.2.4
 - completed:
-    hackage: hakyll-filestore-0.1.6@sha256:29913ba96bab6fc7ded801e6fd6cb9e1c678c6994bd7bc7bc73764816babaa49,1163
+    hackage: hakyll-filestore-0.1.8@sha256:f587e988fc3e5eb2a1ac6e6ead755b29606cb6b02c1bb5005b4a7b02a8ec56ed,1159
     pantry-tree:
-      size: 522
-      sha256: 0f4d5c96785ff165a563e8dfcaf3a3f57d7a37da6fe828109243099174e5114e
+      size: 476
+      sha256: ab391a02b73cbfd7a000a170379c57ca72f3317bb5c153ba35c0adf6efd653d2
   original:
-    hackage: hakyll-filestore-0.1.6
+    hackage: hakyll-filestore-0.1.8
 - completed:
-    hackage: lrucache-1.2.0.1@sha256:18fc3d7052012c7ab3cd395160f34b53c5e1ec5379cc45185baf35b90ffadc2e,1254
+    hackage: filestore-0.6.5@sha256:82b643855e9a0a70ee7ff591b85e47e2fa5871307dcf82a343edd9d0069ecd34,3153
     pantry-tree:
-      size: 619
-      sha256: 61b2a39a11873f2d8a577e1f6b5e848d2f465ea7f6837ce15436796d3a20eda0
+      size: 927
+      sha256: 7e7c5fcfaf9cb52089015f2a912247a2c0a535b943801a5eb7ff137833f969a6
   original:
-    hackage: lrucache-1.2.0.1
+    hackage: filestore-0.6.5
 - completed:
-    hackage: filestore-0.6.3.4@sha256:0b78ba9848f445b05235de57ddfad4f7b5c180651d047b9c8f67f41ff88c50e1,3106
+    hackage: hsass-0.8.0@sha256:05fb3d435dbdf9f66a98db4e1ee57a313170a677e52ab3a5a05ced1fc42b0834,2899
     pantry-tree:
-      size: 984
-      sha256: 3fa1febb2eaf8e6db8df4bf941e511dab45ed5a120e0c056e298fb88a09d6685
+      size: 1448
+      sha256: b25aeb947cb4e0b550f8a6f226d06503ef0edcb54712ad9cdd4fb2b05bf16c7c
   original:
-    hackage: filestore-0.6.3.4
+    hackage: hsass-0.8.0
+- completed:
+    hackage: hlibsass-0.1.10.1@sha256:08db56c633e9a83a642d8ea57dffa93112b092d05bf8f3b07491cfee9ee0dfa5,2565
+    pantry-tree:
+      size: 11229
+      sha256: 39b62f1f3f30c5a9e12f9c6a040d6863edb5ce81951452e649152a18145ee1bc
+  original:
+    hackage: hlibsass-0.1.10.1
 snapshots:
 - completed:
-    size: 524155
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/14/19.yaml
-    sha256: 9f79f6494473c9b46911364b94c4b5ef19ca8d35ebf62e46697cf651f198ee19
-  original: lts-14.19
+    size: 533252
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/16/25.yaml
+    sha256: 147598b98bdd95ec0409bac125a4f1bff3cd4f8d73334d283d098f66a4bcc053
+  original: lts-16.25

@@ -18,7 +18,9 @@
 #
 # resolver: ./custom-snapshot.yaml
 # resolver: https://example.com/snapshots/2018-01-01.yaml
-resolver: lts-14.19
+resolver: lts-16.25
+compiler: ghc-8.10.2
+
 
 # User packages to be built.
 # Various formats can be used as shown in the example below.
@@ -39,11 +41,11 @@ packages:
 # using the same syntax as the packages field.
 # (e.g., acme-missiles-0.3)
 extra-deps: 
-- hakyll-4.13.0.1
 - hakyll-sass-0.2.4
-- hakyll-filestore-0.1.6
-- lrucache-1.2.0.1
-- filestore-0.6.3.4
+- hakyll-filestore-0.1.8
+- filestore-0.6.5
+- hsass-0.8.0
+- hlibsass-0.1.10.1
 
 # Override default flag values for local packages and extra-deps
 # flags: {}
