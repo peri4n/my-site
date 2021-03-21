@@ -3,11 +3,11 @@ body {
     display: grid;
     // 100px header and footer
     grid-template-rows: 80px auto 100px;
-    grid-template-columns: auto;
+    grid-template-columns: 20% 60% 20%;
     grid-template-areas:
-    "header"
-    "main"
-    "footer";
+    "header header header"
+    ". main ."
+    "footer footer footer";
 
     > main {
         grid-area: main;

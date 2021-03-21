@@ -1,22 +1,14 @@
-<div style="display: flex;">
-    <!-- Sidebar -->
-    <aside style="width: 20%; text-align: right;">
-            $if(tags)$
-            <span class="tags">$tags$ : Tags</span>
-            $endif$
-    </aside>
-    <article style="width: 60%;">
-        <header>
-            <title>$title$</title>
-            <span class="description">
-                by <span class="author">$author$</span> on <span class="date">$date$</span>
-            </span>
-        </header>
-        <main>
-            $body$
-        </main>
-        <footer>
-            This article last edited on the $lastmod$. Last revision: <a href="https://github.com/peri4n/my-site/commit/$revision$">$revision$</a>
-        </footer>
-    </article>
-</div>
+<article>
+    <header>
+        <title>$title$</title>
+        <span class="description">
+            by <span class="author">$author$</span> on <span class="date">$date$</span>
+        </span>
+    </header>
+    <main>
+        $body$
+    </main>
+    <footer>
+        This article last edited on the $lastmod$. Last revision: <a href="https://github.com/peri4n/my-site/commit/$revision$">$revision$</a>
+    </footer>
+</article>
