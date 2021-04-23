@@ -35,26 +35,19 @@ main = do
         tags <- buildTags postsPattern (fromCapture "tags/*.html")
 
         -- Process articles
-        match postsPattern $ do
+        match (postsPattern .||. fromList ["projects.md", "contact.md", "about.md"]) $ do
             route $ setExtension "html"
             compile $ pandocCompiler
                 >>= loadAndApplyTemplate "templates/post.html"    (postCtxWithTags tags)
                 >>= loadAndApplyTemplate "templates/default.html" (postCtxWithTags tags)
                 >>= relativizeUrls
 
-        match (fromList ["projects.md", "contact.md", "about.md"]) $ do
-            route $ setExtension "html"
-            compile $ pandocCompiler
-                >>= loadAndApplyTemplate "templates/page.html"    pageCtx
-                >>= loadAndApplyTemplate "templates/default.html" pageCtx
-                >>= relativizeUrls
-
         -- Process tags pages
-        tagsRules tags $ \tag pattern -> do
+        tagsRules tags $ \tag pat -> do
             let title = "Posts tagged \"" ++ tag ++ "\""
             route idRoute
             compile $ do
-                posts <- recentFirst =<< loadAll pattern
+                posts <- recentFirst =<< loadAll pat
                 let ctx = constField "title" title
                           `mappend` listField "posts" (postCtxWithTags tags) (return posts)
                           `mappend` defaultContext
