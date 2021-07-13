@@ -134,4 +134,4 @@ compressedSassCompiler = fmap compressCss <$> sassCompiler
 myConfig :: Configuration
 myConfig =
   defaultConfiguration
-    {deployCommand = "aws s3 cp ./_site/ s3://bioinform.at/ --recursive"}
+    {deployCommand = "aws s3 cp ./_site/ s3://fbull.de/ --recursive --profile private"}
