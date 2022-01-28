@@ -1,77 +1,82 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-import           Data.FileStore               (Revision, authorName, revAuthor,
-                                               revDateTime, revId)
-import           Data.Monoid                  ((<>))
-import           Hakyll
-import           Hakyll.FileStore.Git.Context (gitGetAuthorNames,
-                                               gitGetRevisions)
-import           Hakyll.Web.CompressCss       (compressCss)
-import           Hakyll.Web.Template.Context  (metadataField)
-import           System.Environment           (getArgs)
-import           System.Process               (readProcess)
+import Data.FileStore
+  ( Revision,
+    authorName,
+    revAuthor,
+    revDateTime,
+    revId,
+  )
+import Data.Monoid ((<>))
+import Hakyll
+import Hakyll.FileStore.Git.Context
+  ( gitGetAuthorNames,
+    gitGetRevisions,
+  )
+import Hakyll.Web.CompressCss (compressCss)
+import Hakyll.Web.Template.Context (metadataField)
 
 main :: IO ()
 main = do
-    draftMode <- fmap (elem "--with-drafts") getArgs
-    let postsPattern = if draftMode then "posts/*" .||. "drafts/*" else "posts/*"
+  let postsPattern = "posts/*"
 
-    hakyllWith myConfig $ do
-        -- Process fonts
-        match "fonts/*" $ do
-            route   idRoute
-            compile copyFileCompiler
+  hakyllWith myConfig $ do
+    -- Process fonts
+    match "fonts/*" $ do
+      route idRoute
+      compile copyFileCompiler
 
-        -- Process styles
-        match "sass/**.scss" $
-          compile getResourceBody
-        scssDependencies <- makePatternDependency "sass/**.scss"
-        rulesExtraDependencies [scssDependencies] $
-          create ["css/main.css"] $ do
-            route   idRoute
-            compile compressedSassCompiler
+    -- Process styles
+    match "sass/**.scss" $
+      compile getResourceBody
+    scssDependencies <- makePatternDependency "sass/**.scss"
+    rulesExtraDependencies [scssDependencies] $
+      create ["css/main.css"] $ do
+        route idRoute
+        compile compressedSassCompiler
 
-        -- Process tags
-        tags <- buildTags postsPattern (fromCapture "tags/*.html")
+    -- Process tags
+    tags <- buildTags postsPattern (fromCapture "tags/*.html")
 
-        -- Process articles
-        match (postsPattern .||. fromList ["projects.md", "contact.md", "about.md"]) $ do
-            route $ setExtension "html"
-            compile $ pandocCompiler
-                >>= loadAndApplyTemplate "templates/post.html"    (postCtxWithTags tags)
-                >>= loadAndApplyTemplate "templates/default.html" (postCtxWithTags tags)
-                >>= relativizeUrls
+    -- Process articles
+    match (postsPattern .||. fromList ["projects.md", "contact.md", "about.md"]) $ do
+      route $ setExtension "html"
+      compile $
+        pandocCompiler
+          >>= loadAndApplyTemplate "templates/post.html" (postCtxWithTags tags)
+          >>= loadAndApplyTemplate "templates/default.html" (postCtxWithTags tags)
+          >>= relativizeUrls
 
-        -- Process tags pages
-        tagsRules tags $ \tag pat -> do
-            let title = "Posts tagged \"" ++ tag ++ "\""
-            route idRoute
-            compile $ do
-                posts <- recentFirst =<< loadAll pat
-                let ctx = constField "title" title
-                          `mappend` listField "posts" (postCtxWithTags tags) (return posts)
-                          `mappend` defaultContext
-                makeItem ""
-                    >>= loadAndApplyTemplate "templates/tags.html" ctx
-                    >>= loadAndApplyTemplate "templates/default.html" ctx
-                    >>= relativizeUrls
+    -- Process tags pages
+    tagsRules tags $ \tag pat -> do
+      let title = "Posts tagged \"" ++ tag ++ "\""
+      route idRoute
+      compile $ do
+        posts <- recentFirst =<< loadAll pat
+        let ctx =
+              constField "title" title
+                `mappend` listField "posts" (postCtxWithTags tags) (return posts)
+                `mappend` defaultContext
+        makeItem ""
+          >>= loadAndApplyTemplate "templates/tags.html" ctx
+          >>= loadAndApplyTemplate "templates/default.html" ctx
+          >>= relativizeUrls
 
+    -- Process index page
+    match "index.html" $ do
+      route idRoute
+      compile $ do
+        posts <- recentFirst =<< loadAll "posts/*"
+        let indexCtx =
+              listField "posts" postCtx (return posts)
+                `mappend` constField "title" "Home"
+                `mappend` defaultContext
+        getResourceBody
+          >>= applyAsTemplate indexCtx
+          >>= loadAndApplyTemplate "templates/default.html" indexCtx
+          >>= relativizeUrls
 
-        -- Process index page
-        match "index.html" $ do
-            route idRoute
-            compile $ do
-                posts <- recentFirst =<< loadAll "posts/*"
-                let indexCtx =
-                        listField "posts" postCtx (return posts) `mappend`
-                        constField "title" "Home"                `mappend`
-                        defaultContext
-                getResourceBody
-                    >>= applyAsTemplate indexCtx
-                    >>= loadAndApplyTemplate "templates/default.html" indexCtx
-                    >>= relativizeUrls
-
-        match "templates/*" $ compile templateBodyCompiler
+    match "templates/*" $ compile templateBodyCompiler
 
 --------------------------------------------------------------------------------
 -- Contexts
@@ -120,8 +125,8 @@ gitDateCtx = fromLastRevisionCtx "lastmod" (show . revDateTime)
 --------------------------------------------------------------------------------
 sassCompiler :: Compiler (Item String)
 sassCompiler =
-  loadBody (fromFilePath "sass/main.scss") >>= makeItem >>=
-  withItemBody (unixFilter "sass" args)
+  loadBody (fromFilePath "sass/main.scss") >>= makeItem
+    >>= withItemBody (unixFilter "sass" args)
   where
     args = ["-s", "--scss", "-I", "sass"]
 
@@ -134,4 +139,5 @@ compressedSassCompiler = fmap compressCss <$> sassCompiler
 myConfig :: Configuration
 myConfig =
   defaultConfiguration
-    {deployCommand = "aws s3 cp ./_site/ s3://fbull.de/ --recursive --profile private"}
+    { deployCommand = "aws s3 cp ./_site/ s3://fbull.de/ --recursive --profile private"
+    }
